@@ -1,0 +1,82 @@
+[gd_scene load_steps=11 format=3 uid="uid://do2eb8p0cl4bh"]
+
+[ext_resource type="Script" path="res://p.gd" id="1_b4nws"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_31fvh"]
+
+[sub_resource type="Gradient" id="Gradient_55id3"]
+colors = PackedColorArray(0.996078, 0, 0.192157, 1, 0.996078, 0, 0.192157, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0lgkv"]
+gradient = SubResource("Gradient_55id3")
+
+[sub_resource type="Gradient" id="Gradient_vvcxg"]
+offsets = PackedFloat32Array(0, 0.668831)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gujbb"]
+gradient = SubResource("Gradient_vvcxg")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Curve" id="Curve_4nquy"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_a2e8w"]
+curve = SubResource("Curve_4nquy")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_snpvi"]
+particle_flag_disable_z = true
+angle_max = 45.0
+direction = Vector3(0, 0, 0)
+initial_velocity_min = 200.0
+initial_velocity_max = 300.0
+gravity = Vector3(0, 0, 0)
+scale_min = 2.0
+scale_max = 10.0
+color = Color(0.996078, 0, 0.192157, 1)
+alpha_curve = SubResource("CurveTexture_a2e8w")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5rnqp"]
+size = Vector2(32, 43)
+
+[node name="player" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_b4nws")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+scale = Vector2(-50, -50)
+mesh = SubResource("PrismMesh_31fvh")
+texture = SubResource("GradientTexture1D_0lgkv")
+metadata/_edit_lock_ = true
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(0, -25)
+metadata/_edit_lock_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+z_index = 1
+scale = Vector2(5.28125, 5.28125)
+color = Color(1, 0.494118, 0.560784, 1)
+energy = 3.0
+texture = SubResource("GradientTexture2D_gujbb")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_snpvi")
+lifetime = 0.2
+one_shot = true
+explosiveness = 0.24
+randomness = 0.3
+
+[node name="player" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3.5)
+shape = SubResource("RectangleShape2D_5rnqp")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(4.4, 4.576)
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

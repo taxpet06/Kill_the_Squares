@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://do2eb8p0cl4bh"]
+
+[ext_resource type="Script" path="res://p.gd" id="1_b4nws"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_31fvh"]
+
+[sub_resource type="Gradient" id="Gradient_55id3"]
+colors = PackedColorArray(0.996078, 0, 0.192157, 1, 0.996078, 0, 0.192157, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0lgkv"]
+gradient = SubResource("Gradient_55id3")
+
+[sub_resource type="Gradient" id="Gradient_5tbtp"]
+offsets = PackedFloat32Array(0, 0.668831)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gujbb"]
+gradient = SubResource("Gradient_5tbtp")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_b4nws")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+scale = Vector2(-50, -50)
+mesh = SubResource("PrismMesh_31fvh")
+texture = SubResource("GradientTexture1D_0lgkv")
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-25, 25, 0, -25, 25, 25)
+metadata/_edit_lock_ = true
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(0, -25)
+metadata/_edit_lock_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+z_index = 1
+scale = Vector2(5.28125, 5.28125)
+color = Color(1, 0.494118, 0.560784, 1)
+energy = 3.0
+texture = SubResource("GradientTexture2D_gujbb")

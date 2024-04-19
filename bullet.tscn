@@ -1,0 +1,86 @@
+[gd_scene load_steps=9 format=3 uid="uid://ctvdtyhl8ghvx"]
+
+[ext_resource type="Script" path="res://bullet.gd" id="1_nysvx"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tbmnr"]
+radius = 3.0
+height = 6.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_54xsl"]
+
+[sub_resource type="Gradient" id="Gradient_w7nxo"]
+offsets = PackedFloat32Array(0, 0.668831)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ualjr"]
+gradient = SubResource("Gradient_w7nxo")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Curve" id="Curve_hkt5i"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ipha3"]
+curve = SubResource("Curve_hkt5i")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1ld4f"]
+particle_flag_disable_z = true
+angle_max = 45.0
+direction = Vector3(0, 0, 0)
+initial_velocity_min = 200.0
+initial_velocity_max = 300.0
+gravity = Vector3(0, 0, 0)
+scale_min = 2.0
+scale_max = 10.0
+color = Color(0.996078, 0, 0.192157, 1)
+alpha_curve = SubResource("CurveTexture_ipha3")
+
+[node name="bullet" type="Area2D"]
+collision_layer = 2
+collision_mask = 12
+script = ExtResource("1_nysvx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+scale = Vector2(4.4, 4.4)
+shape = SubResource("CapsuleShape2D_tbmnr")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+modulate = Color(0.996078, 0, 0.192157, 1)
+position = Vector2(0, 4.76837e-07)
+rotation = 1.5708
+scale = Vector2(27, 27)
+mesh = SubResource("SphereMesh_54xsl")
+
+[node name="PointLight2D2" type="PointLight2D" parent="."]
+z_index = 1
+scale = Vector2(1.4375, 1.49279)
+color = Color(1, 0.494118, 0.560784, 1)
+energy = 3.0
+texture = SubResource("GradientTexture2D_ualjr")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(4.08, 4.08)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_1ld4f")
+lifetime = 0.2
+one_shot = true
+explosiveness = 0.24
+randomness = 0.3
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+autostart = true
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(0, -14)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
