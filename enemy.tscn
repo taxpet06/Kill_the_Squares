@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://c2qtcr7085g4"]
+[gd_scene load_steps=11 format=3 uid="uid://c2qtcr7085g4"]
 
 [ext_resource type="Script" path="res://enemy.gd" id="1_fxixj"]
+[ext_resource type="AudioStream" uid="uid://cdaono1e0fbsl" path="res://hitHurt.wav" id="2_01eyi"]
 
 [sub_resource type="Curve" id="Curve_ychqw"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -35,8 +36,9 @@ fill_from = Vector2(0.5, 0.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fs2b0"]
 size = Vector2(84, 83)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_2cy7j"]
-radius = 857.674
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_o0v2y"]
+radius = 588.0
+height = 3492.0
 
 [node name="enemy" type="CharacterBody2D"]
 collision_layer = 8
@@ -76,6 +78,10 @@ collision_mask = 16
 input_pickable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("CircleShape2D_2cy7j")
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_o0v2y")
+
+[node name="hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_01eyi")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

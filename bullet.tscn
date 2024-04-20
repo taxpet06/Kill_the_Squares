@@ -1,6 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://ctvdtyhl8ghvx"]
+[gd_scene load_steps=11 format=3 uid="uid://ctvdtyhl8ghvx"]
 
 [ext_resource type="Script" path="res://bullet.gd" id="1_nysvx"]
+[ext_resource type="AudioStream" uid="uid://b5uv3pm72rs4o" path="res://laserShoot.wav" id="2_gmah5"]
+[ext_resource type="AudioStream" uid="uid://cdaono1e0fbsl" path="res://hitHurt.wav" id="3_q2tgt"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tbmnr"]
 radius = 3.0
@@ -79,6 +81,13 @@ autostart = true
 
 [node name="Marker2D" type="Marker2D" parent="."]
 position = Vector2(0, -14)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_gmah5")
+autoplay = true
+
+[node name="hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_q2tgt")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

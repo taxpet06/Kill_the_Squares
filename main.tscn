@@ -1,19 +1,21 @@
-[gd_scene load_steps=11 format=3 uid="uid://xooglasshm36"]
+[gd_scene load_steps=17 format=3 uid="uid://xooglasshm36"]
 
 [ext_resource type="Script" path="res://main_loop.gd" id="1_hk7ch"]
 [ext_resource type="Shader" path="res://main.gdshader" id="2_bbkof"]
 [ext_resource type="PackedScene" uid="uid://do2eb8p0cl4bh" path="res://p.tscn" id="3_o0x4y"]
 [ext_resource type="Texture2D" uid="uid://du63n8grx0fev" path="res://Screenshot_20240102_174154.png" id="3_xjytr"]
 [ext_resource type="FontFile" uid="uid://cjs372aog1w88" path="res://Minecraft.ttf" id="4_gekux"]
+[ext_resource type="AudioStream" uid="uid://ckid3j08noe8b" path="res://pickupCoin.wav" id="6_umy8e"]
+[ext_resource type="AudioStream" uid="uid://gnmrohxmohs4" path="res://click.wav" id="7_hi6wd"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_sfhsv"]
 
-[sub_resource type="Gradient" id="Gradient_qvvgh"]
+[sub_resource type="Gradient" id="Gradient_043fs"]
 offsets = PackedFloat32Array(0, 0.707792)
 colors = PackedColorArray(0.227451, 0.227451, 0.227451, 1, 0.227451, 0.227451, 0.227451, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_xaisq"]
-gradient = SubResource("Gradient_qvvgh")
+gradient = SubResource("Gradient_043fs")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
@@ -21,11 +23,28 @@ fill_from = Vector2(0.5, 0.5)
 default_font = ExtResource("4_gekux")
 default_font_size = 100
 
+[sub_resource type="Gradient" id="Gradient_vvcxg"]
+offsets = PackedFloat32Array(0, 0.668831)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qjwds"]
+gradient = SubResource("Gradient_vvcxg")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qlbxg"]
 shader = ExtResource("2_bbkof")
 shader_parameter/density = 0.55
 shader_parameter/speed = Vector2(0.02, 0.01)
 shader_parameter/noise_texture = ExtResource("3_xjytr")
+
+[sub_resource type="Theme" id="Theme_8q2po"]
+default_font = ExtResource("4_gekux")
+default_font_size = 135
+
+[sub_resource type="Theme" id="Theme_layem"]
+default_font = ExtResource("4_gekux")
+default_font_size = 145
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_hk7ch")
@@ -37,16 +56,26 @@ mesh = SubResource("QuadMesh_sfhsv")
 texture = SubResource("GradientTexture2D_xaisq")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
+visible = false
 texture_filter = 1
-offset_left = 578.0
+offset_left = 618.0
 offset_top = 863.0
-offset_right = 1193.0
+offset_right = 1233.0
 offset_bottom = 963.0
 theme = SubResource("Theme_bmnyg")
 text = "SCORE :"
 
+[node name="PointLight2D" type="PointLight2D" parent="RichTextLabel"]
+visible = false
+z_index = 1
+position = Vector2(486, 49)
+scale = Vector2(8.20313, 8.35938)
+color = Color(1, 0.494118, 0.560784, 1)
+energy = 3.0
+texture = SubResource("GradientTexture2D_qjwds")
+
 [node name="player" parent="." instance=ExtResource("3_o0x4y")]
-position = Vector2(864, 486)
+position = Vector2(864, 758.855)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(864, 486)
@@ -65,4 +94,79 @@ motion_mirroring = Vector2(1728, 972)
 material = SubResource("ShaderMaterial_qlbxg")
 offset_right = 1728.0
 offset_bottom = 972.0
+mouse_filter = 2
 color = Color(0.145098, 0.286275, 0.498039, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+offset_left = 69.0
+offset_top = 359.0
+offset_right = 1684.0
+offset_bottom = 631.0
+theme = SubResource("Theme_8q2po")
+text = "USE ARROWS TO MOVE
+ AND SPACE TO SHOOT"
+
+[node name="PointLight2D" type="PointLight2D" parent="RichTextLabel2"]
+z_index = 1
+position = Vector2(798.5, 98.5)
+scale = Vector2(26.9844, 8.35938)
+color = Color(1, 0.494118, 0.560784, 1)
+energy = 3.0
+texture = SubResource("GradientTexture2D_qjwds")
+
+[node name="replay" type="Button" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 582.0
+offset_top = 169.0
+offset_right = 1190.0
+offset_bottom = 441.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_layem")
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 0)
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 0)
+text = "REPLAY"
+flat = true
+
+[node name="PointLight2D" type="PointLight2D" parent="replay"]
+z_index = 1
+position = Vector2(319, 226.25)
+scale = Vector2(19.7578, 11.9297)
+color = Color(1, 0.494118, 0.560784, 1)
+energy = 3.0
+texture = SubResource("GradientTexture2D_qjwds")
+
+[node name="menu" type="Button" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 582.0
+offset_top = 393.0
+offset_right = 1190.0
+offset_bottom = 665.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_layem")
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 0)
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 0)
+text = "MENU"
+flat = true
+
+[node name="score" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_umy8e")
+volume_db = 6.0
+
+[node name="click" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_hi6wd")
+
+[connection signal="pressed" from="replay" to="." method="_on_replay_pressed"]
+[connection signal="pressed" from="menu" to="." method="_on_menu_pressed"]

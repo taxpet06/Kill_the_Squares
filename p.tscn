@@ -1,6 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://do2eb8p0cl4bh"]
+[gd_scene load_steps=13 format=3 uid="uid://do2eb8p0cl4bh"]
 
 [ext_resource type="Script" path="res://p.gd" id="1_b4nws"]
+[ext_resource type="AudioStream" uid="uid://c1efe2sa5hw38" path="res://jump.wav" id="2_567f4"]
+[ext_resource type="AudioStream" uid="uid://cdaono1e0fbsl" path="res://hitHurt.wav" id="3_i3jcw"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_31fvh"]
 
@@ -10,12 +12,12 @@ colors = PackedColorArray(0.996078, 0, 0.192157, 1, 0.996078, 0, 0.192157, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_0lgkv"]
 gradient = SubResource("Gradient_55id3")
 
-[sub_resource type="Gradient" id="Gradient_vvcxg"]
+[sub_resource type="Gradient" id="Gradient_m2bd7"]
 offsets = PackedFloat32Array(0, 0.668831)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_gujbb"]
-gradient = SubResource("Gradient_vvcxg")
+gradient = SubResource("Gradient_m2bd7")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
@@ -78,5 +80,12 @@ shape = SubResource("RectangleShape2D_5rnqp")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 scale = Vector2(4.4, 4.576)
+
+[node name="jump" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_567f4")
+volume_db = -6.0
+
+[node name="hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_i3jcw")
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

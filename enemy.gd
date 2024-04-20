@@ -18,6 +18,8 @@ func _physics_process(_delta):
 			_shoot()
 		global_position+= vec.normalized()
 func _die():
+	$hit.playing = true
+	$CollisionShape2D.set_deferred("disabled", true)
 	$GPUParticles2D.emitting = true
 	$MeshInstance2D.visible = false
 	SPEED = 0.0

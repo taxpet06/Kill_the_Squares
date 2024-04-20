@@ -1,6 +1,6 @@
 extends Area2D
 var dir = Vector2(1,1)
-var can_die = false
+var can_die = true
 @export var speed = 10
 func _physics_process(_delta):
 	if collision_layer == 2:
@@ -10,6 +10,9 @@ func _physics_process(_delta):
 		position += dir*speed
 
 func _die():
+	$hit.playing = true
+	set_deferred("monitorable",false)
+	set_deferred("monitoring",false)
 	$GPUParticles2D.emitting = true
 	$MeshInstance2D.visible = false
 	dir = Vector2(0,0)
@@ -25,10 +28,11 @@ func _on_body_entered(body):
 	if can_die:
 		if body.collision_layer == 8:
 			get_parent().score += 1
+			get_parent().get_node("score").playing = true
 			body._die()
 		elif body.name == "player":
 			body._die()
 	if can_die:
 		_die()
-func _on_timer_timeout():
-	can_die = true
+#func _on_timer_timeout():
+	#can_die = true
