@@ -1,0 +1,1 @@
+This is a small, indie game development project that I completed in a weekend using the Godot game engine. It includes some shaders using the Godot shader language, player movement, menu interactions and an arcade-style loop that continuously spawns enemies that have a basic enemy AI. This project was not done for a class, I pursued by myself out of passion. 
